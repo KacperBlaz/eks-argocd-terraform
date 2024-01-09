@@ -31,7 +31,6 @@ plan_infra:
   extends: .common
   stage: plan
   script:
-    - cd $TF_ROOT
     - terraform plan -out=$CI_PROJECT_DIR/$TF_VAR_ENV_NAME.plan -input=false
   artifacts:
     name: "Terraform_Plan"
