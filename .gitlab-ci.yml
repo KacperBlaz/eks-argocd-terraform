@@ -17,7 +17,8 @@ variables:
     - |
       terraform init -input=false -reconfigure -backend-config=${$TF_ROOT}/${BACKEND_CONFIG}
   tags:
-    - docker
+    - terraform
+    - oidc
 
 validate_infra:
   extends: .common
