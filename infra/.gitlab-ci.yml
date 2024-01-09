@@ -1,0 +1,60 @@
+stages:
+  - validate
+  - plan
+  - apply
+  - destroy
+
+variables:
+  TF_VAR_ENV_NAME: "dev"
+  BACKEND_CONFIG: "backend.tfvars"
+  TF_ROOT: "/env/${ENVIRONMENT}"
+
+.common:
+  image:
+    name: hashicorp/terraform:1.6
+    entrypoint: [""]
+  before_script:
+    - |
+      terraform init -input=false -reconfigure -backend-config=${$TF_ROOT}/${BACKEND_CONFIG}
+  tags:
+    - docker
+
+validate_infra:
+  extends: .common
+  stage: validate
+  script:
+    - terraform validate
+
+plan_infra:
+  extends: .common
+  stage: plan
+  script:
+    - cd ${TF_ROOT}
+    - terraform plan -out=${TF_VAR_ENV_NAME}.plan -input=false
+  artifacts:
+    name: "Terraform_Plan"
+    when: on_success
+    paths:
+      - ${TF_ROOT}/${TF_VAR_ENV_NAME}.plan
+
+apply_infra:
+  extends: .common
+  when: manual
+  stage: apply
+  script:
+    - apk add --no-cache docker
+    - apk add --no-cache python3
+    - apk add --no-cache py3-pip
+    - pip3 install --upgrade pip
+    - pip3 install awscli
+    - terraform apply -input=false ${TF_ROOT}/${TF_VAR_ENV_NAME}.plan
+
+destroy_infra:
+  extends: .common
+  when: manual
+  stage: destroy
+  script:
+    - terraform destroy -input=false ${TF_ROOT}/${TF_VAR_ENV_NAME}.plan
+
+
+
