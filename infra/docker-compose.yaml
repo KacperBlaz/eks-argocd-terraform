@@ -1,0 +1,32 @@
+version: "3.7"
+services:
+  infra:
+    build:
+      dockerfile: docker/Dockerfile
+      context: .
+#    build:
+#      dockerfile: docker/Dockerfile
+#      context: .
+    working_dir: /infra/env/${ENVIRONMENT}
+#    user: root
+#    entrypoint: "/bin/sh"
+    volumes:
+      - ./:/infra
+      - ~/.kube/config:/root/.kube/config
+#      - $HOME:/root/:rw
+#      - $HOME/.cache/terraform-providers:/.tfcache
+#      - $HOME/.cache/helm:/root/.cache/helm
+#      - $HOME/.config/helm:/root/.config/helm
+#      - $HOME/.aws/cli/cache:/root/.aws/cli/cache
+    environment:
+#      - TF_PLUGIN_CACHE_DIR=/.tfcache
+#      - TF_VAR_project_name=$PROJECT_NAME
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+#      - AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN}
+      - AWS_VAULT=${AWS_VAULT}
+      - AWS_USER=${AWS_USER}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+#      - AWS_CREDENTIAL_EXPIRATION=${AWS_CREDENTIAL_EXPIRATION}
+      - ENVIRONMENT=${ENVIRONMENT}

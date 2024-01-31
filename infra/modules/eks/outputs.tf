@@ -6,7 +6,7 @@ output "cluster_endpoint" {
     value = aws_eks_cluster.argocd-cluster.endpoint
   }
 
-output "kubeconfig-cert" {
+output "cluster_certificate_authority_data" {
   value = aws_eks_cluster.argocd-cluster.certificate_authority[0].data
 }
 

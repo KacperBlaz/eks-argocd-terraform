@@ -37,3 +37,15 @@ variable "instance_types" {
 variable "max_unavailable" {
   type = string
 }
+
+variable "account_id" {
+  type = string
+}
+
+variable "eks_serviceaccount_name" {
+  type = string
+}
+
+variable "serviceaccount_namespace" {
+  type = string
+}

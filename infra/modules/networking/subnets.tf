@@ -6,7 +6,7 @@ resource "aws_subnet" "public_subnet" {
   map_public_ip_on_launch = true
 
   tags = {
-#    Name = "eks-public-subnet-${var.environment}-${index(var.public_subnets_cidr_blocks, each.value) + 1}"
+    "kubernetes.io/role/elb" = 1
     Environment = var.environment
   }
 }
@@ -20,7 +20,7 @@ resource "aws_subnet" "private_subnet" {
   map_public_ip_on_launch = false
 
   tags = {
-#    Name = "eks-private-subnet-${var.environment}-${index(var.private_subnets_cidr_blocks, each.value) + 1}"
+    "kubernetes.io/role/internal-elb" = 1
     Environment = var.environment
   }
 }

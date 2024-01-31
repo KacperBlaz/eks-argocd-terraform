@@ -1,9 +1,13 @@
 resource "aws_eks_cluster" "argocd-cluster" {
   name     = "${var.eks_cluster_name}-${var.environment}"
   role_arn = aws_iam_role.eks_role.arn
+  enabled_cluster_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
 
   vpc_config {
     subnet_ids = concat(var.public_subnets_ids, var.private_subnets_ids)
+#    security_group_ids {
+#
+#    }
   }
 
   depends_on = [
@@ -47,4 +51,16 @@ resource "null_resource" "load_eks_kubeconfig" {
   provisioner "local-exec" {
     command = "aws eks --region ${var.aws_region} update-kubeconfig --name ${aws_eks_cluster.argocd-cluster.name}"
   }
+}
+
+data "local_file" "kubeconfig" {
+  filename = "/root/.kube/config"
+}
+
+
+resource "aws_ssm_parameter" "eks-kubeconfig" {
+  name = "/${var.environment}/eks/kubeconfig"
+  type = "String"
+  tier = "Advanced"
+  value = data.local_file.kubeconfig.content
 }

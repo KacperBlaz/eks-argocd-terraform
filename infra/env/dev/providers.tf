@@ -1,6 +1,8 @@
 terraform {
   backend "s3" {}
 
+  required_version = ">=0.13"
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -8,10 +10,12 @@ terraform {
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "2.21.1"
+    }
+    kubectl = {
+      source  = "alekc/kubectl"
+      version = "~> 2.0"
     }
   }
-  required_version = ">=1.2.0"
 }
 
 provider "aws" {
@@ -19,6 +23,20 @@ provider "aws" {
 }
 
 provider "kubernetes" {
-  config_path = "~/.kube/config"
+  config_path            = "~/.kube/config"
+  host                   = module.main
+  cluster_ca_certificate = base64decode(module.main.kubeconfig_cert_authority_data)
 }
 
+provider "kubectl" {
+  config_path            = "~/.kube/config"
+  host                   = module.main
+  cluster_ca_certificate = base64decode(module.main.kubeconfig_cert_authority_data)
+  alias = "kubectl-provider"
+}
+
+provider "helm" {
+  kubernetes {
+    config_path            = "~/.kube/config"
+  }
+}

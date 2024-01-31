@@ -3,6 +3,6 @@ variable "argocd_namespace" {
 }
 
 variable "aws_region" {}
-#variable "kubernetes_host" {}
+#variable "host" {}
 #variable "cluster_ca_certificate" {}
 #variable "cluster_name" {}
