@@ -1,1 +1,1 @@
-Stawianie EKS-A dla różnych środowisk za pomocą Makefile , Docker i Docker-compose (Three Musketers)
+Stawianie EKS-A dla różnych środowisk za pomocą Makefile , Docker i Docker-compose (Three Musketers) oraz Gitlab CI
