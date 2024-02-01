@@ -32,11 +32,13 @@ plan_infra:
   stage: plan
   script:
     - terraform plan -out=${TF_VAR_ENV_NAME}.plan -input=false
+    - pwd
+    - ls
   artifacts:
     name: "Terraform_Plan"
     when: on_success
     paths:
-      - ${$TF_ROOT}/${TF_VAR_ENV_NAME}.plan
+      - ${TF_ROOT}/${TF_VAR_ENV_NAME}.plan
 
 apply_infra:
   extends: .common
