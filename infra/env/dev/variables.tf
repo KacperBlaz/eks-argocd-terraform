@@ -108,7 +108,7 @@ variable "eks_serviceaccount_name" {
 }
 
 variable "serviceaccount_namespace" {
-  type = string
+  type    = string
   default = "default"
 }
 ### ARGOCD ###
@@ -118,5 +118,15 @@ variable "argocd_namespace" {
 }
 
 variable "account_id" {
+  type = string
+}
+
+### KARPETNER ###
+
+variable "karpenter_serviceaccount_namespace" {
+  type = string
+}
+
+variable "karpetner_eks_serviceaccount_name" {
   type = string
 }

@@ -45,6 +45,10 @@ resource "aws_eks_node_group" "eks_cluster_node_group" {
     Name = "EKS-Node-Group-${var.environment}"
     Environment = var.environment
   }
+
+  lifecycle {
+    ignore_changes = [scaling_config[0].desired_size]
+  }
 }
 
 resource "null_resource" "load_eks_kubeconfig" {

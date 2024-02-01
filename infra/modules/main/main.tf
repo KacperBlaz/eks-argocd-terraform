@@ -6,6 +6,7 @@ module "vpc" {
   private_subnets_cidr_blocks = var.private_subnets_cidr_blocks
   public_subnets_cidr_blocks = var.public_subnets_cidr_blocks
   vpc_cidr_block = var.vpc_cidr_block
+  cluster_name = var.eks_cluster_name
 }
 
 module "eks" {
@@ -25,6 +26,8 @@ module "eks" {
   account_id = var.account_id
   eks_serviceaccount_name = var.eks_serviceaccount_name
   serviceaccount_namespace = var.serviceaccount_namespace
+  karpetner_eks_serviceaccount_name = var.karpetner_eks_serviceaccount_name
+  karpenter_serviceaccount_namespace = var.karpenter_serviceaccount_namespace
 }
 
 #module "eks-irsa" {
@@ -54,6 +57,7 @@ module "k8s" {
   providers = {
     kubectl = kubectl.kubectl-provider
   }
+  depends_on = [module.eks, module.helm]
   source = "../k8s"
   environment = var.environment
   sa-role-arn = module.eks.eks_cluster_autoscaler_arn
@@ -64,10 +68,15 @@ module "k8s" {
 
 module "helm" {
   source = "../helm"
-  depends_on = [module.eks, module.k8s]
+  depends_on = [module.eks]
   environment = var.environment
   loadbalancer_controller_role_arn = module.eks.eks_cluster_autoscaler_arn
   cert-manager-namespace = var.cert-manager-namespace
   cluster_name = module.eks.cluster_name
   serviceaccount_name = var.eks_serviceaccount_name
+  cluster_endpoint = module.eks.cluster_endpoint
+  karpetner_eks_serviceaccount_name = var.karpetner_eks_serviceaccount_name
+  karpenter_serviceaccount_namespace = var.karpenter_serviceaccount_namespace
+  karpetner_service_account_arn = module.eks.karpenter_role_arn
+  instance_profile_name = module.eks.karpetner_instance_profile_name
 }

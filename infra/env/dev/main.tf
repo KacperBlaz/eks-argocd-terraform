@@ -18,7 +18,9 @@ module "main" {
   max_unavailable             = var.max_unavailable
   argocd_namespace            = var.argocd_namespace
   account_id                  = var.account_id
-  eks_serviceaccount_name = var.eks_serviceaccount_name
-  serviceaccount_namespace = var.serviceaccount_namespace
-  cert-manager-namespace = var.cert-manager-namespace
+  eks_serviceaccount_name     = var.eks_serviceaccount_name
+  serviceaccount_namespace    = var.serviceaccount_namespace
+  cert-manager-namespace      = var.cert-manager-namespace
+  karpetner_eks_serviceaccount_name = var.karpetner_eks_serviceaccount_name
+  karpenter_serviceaccount_namespace = var.karpenter_serviceaccount_namespace
 }

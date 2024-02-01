@@ -8,6 +8,7 @@ resource "aws_subnet" "public_subnet" {
   tags = {
     "kubernetes.io/role/elb" = 1
     Environment = var.environment
+    "kubernetes.io/cluster/${var.eks_cluster_name}-${var.environment}"= "owned"
   }
 }
 
@@ -22,6 +23,7 @@ resource "aws_subnet" "private_subnet" {
   tags = {
     "kubernetes.io/role/internal-elb" = 1
     Environment = var.environment
+    "kubernetes.io/cluster/${var.eks_cluster_name}-${var.environment}" = "owned"
   }
 }
 

@@ -11,6 +11,15 @@ variable "cert-manager-namespace" {
   type = string
 }
 
+### KARPETNER ###
+
+variable "karpetner_eks_serviceaccount_name" {
+  type = string
+}
+
+variable "karpenter_serviceaccount_namespace" {
+  type = string
+}
 #variable "loadbalancer_controller_role_arn" {
 #  type = string
 #}

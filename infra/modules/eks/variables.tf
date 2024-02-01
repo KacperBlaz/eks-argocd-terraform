@@ -49,3 +49,13 @@ variable "eks_serviceaccount_name" {
 variable "serviceaccount_namespace" {
   type = string
 }
+
+### KARPETNER ###
+
+variable "karpenter_serviceaccount_namespace" {
+  type = string
+}
+
+variable "karpetner_eks_serviceaccount_name" {
+  type = string
+}

@@ -9,7 +9,7 @@ terraform {
       version = "~> 3.27"
     }
     kubernetes = {
-      source  = "hashicorp/kubernetes"
+      source = "hashicorp/kubernetes"
     }
     kubectl = {
       source  = "alekc/kubectl"
@@ -32,11 +32,11 @@ provider "kubectl" {
   config_path            = "~/.kube/config"
   host                   = module.main
   cluster_ca_certificate = base64decode(module.main.kubeconfig_cert_authority_data)
-  alias = "kubectl-provider"
+  alias                  = "kubectl-provider"
 }
 
 provider "helm" {
   kubernetes {
-    config_path            = "~/.kube/config"
+    config_path = "~/.kube/config"
   }
 }
