@@ -45,6 +45,7 @@ apply_infra:
   when: manual
   stage: apply
   script:
+    - ls ${CI_PROJECT_DIR}
     - apk add --no-cache docker
     - apk add --no-cache python3
     - apk add --no-cache py3-pip
