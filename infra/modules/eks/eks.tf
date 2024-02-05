@@ -5,9 +5,6 @@ resource "aws_eks_cluster" "argocd-cluster" {
 
   vpc_config {
     subnet_ids = concat(var.public_subnets_ids, var.private_subnets_ids)
-#    security_group_ids {
-#
-#    }
   }
 
   depends_on = [
@@ -60,11 +57,12 @@ resource "null_resource" "load_eks_kubeconfig" {
 
 data "local_file" "kubeconfig" {
   depends_on = [null_resource.load_eks_kubeconfig]
-  filename = "~/.kube/config"
+  filename = "/root/.kube/config"
 }
 
 
 resource "aws_ssm_parameter" "eks-kubeconfig" {
+  depends_on = [data.local_file.kubeconfig]
   name = "/${var.environment}/eks/kubeconfig"
   type = "String"
   tier = "Advanced"

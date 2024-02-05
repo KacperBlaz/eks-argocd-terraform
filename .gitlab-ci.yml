@@ -8,7 +8,7 @@ variables:
   TF_VAR_ENV_NAME: "dev"
   BACKEND_CONFIG: "backend.tfvars"
   TF_ROOT: "infra/env/${TF_VAR_ENV_NAME}"
-  KUBECONFIG_PATH: "~/.kube/"
+  KUBECONFIG_PATH: "/root/.kube/"
 
 .common:
   image:
@@ -17,8 +17,6 @@ variables:
   before_script:
     - |
       cd ${TF_ROOT}
-      mkdir -p ${KUBECONFIG_PATH}
-      touch ${KUBECONFIG_PATH}/config
       terraform init -input=false -reconfigure -backend-config=${BACKEND_CONFIG}
   tags:
     - terraform
@@ -34,12 +32,15 @@ plan_infra:
   extends: .common
   stage: plan
   script:
+    - mkdir -p ${KUBECONFIG_PATH}
+    - touch ${KUBECONFIG_PATH}/config
     - terraform plan -out=${TF_VAR_ENV_NAME}.plan -input=false
   artifacts:
     name: "Terraform_Plan"
     when: on_success
     paths:
       - ${TF_ROOT}/${TF_VAR_ENV_NAME}.plan
+      - ${KUBECONFIG_PATH}/config
 
 apply_infra:
   extends: .common

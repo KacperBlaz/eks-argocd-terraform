@@ -16,10 +16,6 @@ variable "cert-manager-namespace" {
   type = string
 }
 
-#variable "kubectl-provider" {
-#  type = string
-#}
-
 ### NETWORKING MODULE ###
 
 variable "vpc_cidr_block" {
@@ -144,12 +140,6 @@ variable "argocd_helm_chart_version" {
   type        = string
   default     = ""
 }
-
-#variable "argocd_server_host" {
-#  description = "Hostname for argocd (will be utilised in ingress if enabled)"
-#  type        = string
-#  default     = "argocd.calvineotieno.com"
-#}
 
 
 variable "argocd_ingress_enabled" {
