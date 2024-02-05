@@ -32,10 +32,6 @@ plan_infra:
   stage: plan
   script:
     - terraform plan -out=${TF_VAR_ENV_NAME}.plan -input=false
-    - pwd
-    - ls
-  after_script:
-    - mv ${CI_PROJECT_DIR}/${TF_VAR_ENV_NAME}.plan ${TF_ROOT}
   artifacts:
     name: "Terraform_Plan"
     when: on_success
@@ -54,14 +50,14 @@ apply_infra:
     - rm /usr/lib/python3.11/EXTERNALLY-MANAGED
     - pip3 install --upgrade pip
     - pip3 install awscli
-    - terraform apply -input=false ${TF_ROOT}/${TF_VAR_ENV_NAME}.plan
+    - terraform apply -input=false ${CI_PROJECT_DIR}/${TF_ROOT}/${TF_VAR_ENV_NAME}.plan
 
 destroy_infra:
   extends: .common
   when: manual
   stage: destroy
   script:
-    - terraform destroy -input=false ${$TF_ROOT}/${TF_VAR_ENV_NAME}.plan
+    - terraform destroy -input=false ${CI_PROJECT_DIR}/${$TF_ROOT}/${TF_VAR_ENV_NAME}.plan
 
 
 
