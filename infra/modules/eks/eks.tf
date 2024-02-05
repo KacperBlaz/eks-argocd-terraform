@@ -59,7 +59,8 @@ resource "null_resource" "load_eks_kubeconfig" {
 }
 
 data "local_file" "kubeconfig" {
-  filename = "/root/.kube/config"
+  depends_on = [null_resource.load_eks_kubeconfig]
+  filename = "~/.kube/config"
 }
 
 
