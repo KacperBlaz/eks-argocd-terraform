@@ -34,6 +34,8 @@ plan_infra:
     - terraform plan -out=${TF_VAR_ENV_NAME}.plan -input=false
     - pwd
     - ls
+  after_script:
+    - mv ${CI_PROJECT_DIR}/${TF_VAR_ENV_NAME}.plan ${TF_ROOT}
   artifacts:
     name: "Terraform_Plan"
     when: on_success
