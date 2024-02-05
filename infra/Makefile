@@ -29,7 +29,7 @@ build: checking-env
 	docker-compose build
 
 test:
-	${DOCKER_RUN} terraform state delete-provider registry.terraform.io/hashicorp/kubectl
+	${DOCKER_RUN} ls
 
 validate: checking-env
 	${DOCKER_RUN} terraform validate

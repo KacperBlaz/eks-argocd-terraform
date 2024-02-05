@@ -85,6 +85,37 @@ variable "serviceaccount_namespace" {
 
 ### ARGOCD ###
 
-variable "argocd_namespace" {}
+variable "argocd_namespace" {
+  type = string
+}
 
 variable "account_id" {}
+
+variable "argo_repo_url" {
+  type        = string
+}
+
+variable "argocd_helm_chart_version" {
+  description = "argocd helm chart version to use"
+  type        = string
+  default     = ""
+}
+
+#variable "argocd_server_host" {
+#  description = "Hostname for argocd (will be utilised in ingress if enabled)"
+#  type        = string
+#  default     = "argocd.calvineotieno.com"
+#}
+
+variable "argocd_ingress_enabled" {
+  description = "Enable/disable argocd ingress"
+  type        = bool
+}
+
+
+variable "argocd_name" {
+  default = "argocd-eks"
+}
+
+variable "argocd_server_host" {}
+

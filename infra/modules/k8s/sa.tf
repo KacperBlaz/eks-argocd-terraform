@@ -37,7 +37,7 @@ YAML
 #    matchLabels:
 #      app: nginx
 #  strategy: {}
-#  template:
+#  templates:
 #    metadata:
 #      creationTimestamp: null
 #      labels:
@@ -844,7 +844,7 @@ YAML
 #    matchLabels:
 #      app.kubernetes.io/component: controller
 #      app.kubernetes.io/name: aws-load-balancer-controller
-#  template:
+#  templates:
 #    metadata:
 #      labels:
 #        app.kubernetes.io/component: controller

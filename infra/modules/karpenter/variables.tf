@@ -37,3 +37,5 @@ variable "instance_profile_name" {
 variable "cluster_endpoint" {
   type = string
 }
+
+#variable "aws_eks_node_group" {}

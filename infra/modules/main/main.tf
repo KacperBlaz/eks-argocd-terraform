@@ -57,7 +57,7 @@ module "k8s" {
   providers = {
     kubectl = kubectl.kubectl-provider
   }
-  depends_on = [module.eks, module.helm]
+  depends_on = [module.eks, module.karpenter]
   source = "../k8s"
   environment = var.environment
   sa-role-arn = module.eks.eks_cluster_autoscaler_arn
@@ -66,8 +66,8 @@ module "k8s" {
   cluster_name = module.eks.cluster_name
 }
 
-module "helm" {
-  source = "../helm"
+module "karpenter" {
+  source = "../karpenter"
   depends_on = [module.eks]
   environment = var.environment
   loadbalancer_controller_role_arn = module.eks.eks_cluster_autoscaler_arn
@@ -80,3 +80,23 @@ module "helm" {
   karpetner_service_account_arn = module.eks.karpenter_role_arn
   instance_profile_name = module.eks.karpetner_instance_profile_name
 }
+
+module "argocd" {
+  source = "../argocd"
+  depends_on = [module.eks,module.karpenter,module.k8s]
+  environment = var.environment
+  argo_repo_url = var.argo_repo_url
+  argocd_helm_chart_version = var.argocd_helm_chart_version
+  argocd_ingress_enabled = var.argocd_ingress_enabled
+  argocd_name = var.argocd_name
+  argocd_namespace = var.argocd_namespace
+  argocd_server_host = var.argocd_server_host
+}
+
+#module "application" {
+#  providers = {
+#    kubectl = kubectl.kubectl-provider
+#  }
+#  depends_on = [module.argocd]
+#  source = "../argo_applications"
+#}

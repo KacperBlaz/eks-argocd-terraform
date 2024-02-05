@@ -46,7 +46,7 @@ provider "kubectl" {
 }
 
 provider "helm" {
-  #alias = "helm-provider"
+  #alias = "karpenter-provider"
   kubernetes {
     host                   = module.eks.cluster_endpoint
     cluster_ca_certificate = "${base64decode(yamldecode(module.eks.cluster_certificate_authority_data))}"

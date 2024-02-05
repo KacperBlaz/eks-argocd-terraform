@@ -44,6 +44,7 @@ resource "aws_eks_node_group" "eks_cluster_node_group" {
   tags = {
     Name = "EKS-Node-Group-${var.environment}"
     Environment = var.environment
+    "karpenter.sh/discovery" = var.eks_cluster_name
   }
 
   lifecycle {
