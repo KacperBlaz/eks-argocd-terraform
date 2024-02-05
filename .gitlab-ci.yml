@@ -8,6 +8,7 @@ variables:
   TF_VAR_ENV_NAME: "dev"
   BACKEND_CONFIG: "backend.tfvars"
   TF_ROOT: "infra/env/${TF_VAR_ENV_NAME}"
+  KUBECONFIG_PATH: "~/.kube/"
 
 .common:
   image:
@@ -16,6 +17,8 @@ variables:
   before_script:
     - |
       cd ${TF_ROOT}
+      mkdir -p ${KUBECONFIG_PATH}
+      touch ${KUBECONFIG_PATH}/config
       terraform init -input=false -reconfigure -backend-config=${BACKEND_CONFIG}
   tags:
     - terraform
@@ -43,7 +46,6 @@ apply_infra:
   when: manual
   stage: apply
   script:
-    - ls ${CI_PROJECT_DIR}
     - apk add --no-cache docker
     - apk add --no-cache python3
     - apk add --no-cache py3-pip
