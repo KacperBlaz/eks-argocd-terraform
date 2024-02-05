@@ -8,7 +8,7 @@ variables:
   TF_VAR_ENV_NAME: "dev"
   BACKEND_CONFIG: "backend.tfvars"
   TF_ROOT: "infra/env/${TF_VAR_ENV_NAME}"
-  KUBECONFIG_PATH: "/root/.kube/"
+  KUBECONFIG_PATH: "/root/.kube"
 
 .common:
   image:
