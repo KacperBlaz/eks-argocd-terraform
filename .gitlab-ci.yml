@@ -48,9 +48,10 @@ apply_infra:
     - apk add --no-cache docker
     - apk add --no-cache python3
     - apk add --no-cache py3-pip
+    - rm /usr/lib/python3.11/EXTERNALLY-MANAGED
     - pip3 install --upgrade pip
     - pip3 install awscli
-    - terraform apply -input=false ${$TF_ROOT}/${TF_VAR_ENV_NAME}.plan
+    - terraform apply -input=false ${TF_ROOT}/${TF_VAR_ENV_NAME}.plan
 
 destroy_infra:
   extends: .common
