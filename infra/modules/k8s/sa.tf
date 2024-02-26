@@ -264,8 +264,8 @@ YAML
 #          spec:
 #            description: TargetGroupBindingSpec defines the desired state of TargetGroupBinding
 #            properties:
-#              networking:
-#                description: networking provides the networking setup for ELBV2 LoadBalancer
+#              vpc:
+#                description: vpc provides the vpc setup for ELBV2 LoadBalancer
 #                  to access targets in TargetGroup.
 #                properties:
 #                  ingress:
@@ -279,7 +279,7 @@ YAML
 #                            should be specified.
 #                          items:
 #                            description: NetworkingPeer defines the source/destination
-#                              peer for networking rules.
+#                              peer for vpc rules.
 #                            properties:
 #                              ipBlock:
 #                                description: IPBlock defines an IPBlock peer. If specified,
@@ -423,8 +423,8 @@ YAML
 #          spec:
 #            description: TargetGroupBindingSpec defines the desired state of TargetGroupBinding
 #            properties:
-#              networking:
-#                description: networking defines the networking rules to allow ELBV2
+#              vpc:
+#                description: vpc defines the vpc rules to allow ELBV2
 #                  LoadBalancer to access targets in TargetGroup.
 #                properties:
 #                  ingress:
@@ -440,7 +440,7 @@ YAML
 #                            should be specified.
 #                          items:
 #                            description: NetworkingPeer defines the source/destination
-#                              peer for networking rules.
+#                              peer for vpc rules.
 #                            properties:
 #                              ipBlock:
 #                                description: IPBlock defines an IPBlock peer. If specified,
@@ -472,7 +472,7 @@ YAML
 #                            it defaults to all ports with TCP.
 #                          items:
 #                            description: NetworkingPort defines the port and protocol
-#                              for networking rules.
+#                              for vpc rules.
 #                            properties:
 #                              port:
 #                                anyOf:
@@ -759,7 +759,7 @@ YAML
 #  - patch
 #  - update
 #- apiGroups:
-#  - networking.k8s.io
+#  - vpc.k8s.io
 #  resources:
 #  - ingressclasses
 #  verbs:
@@ -767,7 +767,7 @@ YAML
 #  - list
 #  - watch
 #- apiGroups:
-#  - networking.k8s.io
+#  - vpc.k8s.io
 #  resources:
 #  - ingresses
 #  verbs:
@@ -777,7 +777,7 @@ YAML
 #  - update
 #  - watch
 #- apiGroups:
-#  - networking.k8s.io
+#  - vpc.k8s.io
 #  resources:
 #  - ingresses/status
 #  verbs:
@@ -1016,13 +1016,13 @@ YAML
 #    service:
 #      name: aws-load-balancer-webhook-service
 #      namespace: kube-system
-#      path: /validate-networking-v1beta1-ingress
+#      path: /validate-vpc-v1beta1-ingress
 #  failurePolicy: Fail
 #  matchPolicy: Equivalent
 #  name: vingress.elbv2.k8s.aws
 #  rules:
 #  - apiGroups:
-#    - networking.k8s.io
+#    - vpc.k8s.io
 #    apiVersions:
 #    - v1beta1
 #    operations:

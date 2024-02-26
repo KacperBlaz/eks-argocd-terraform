@@ -57,7 +57,7 @@ resource "null_resource" "load_eks_kubeconfig" {
 
 data "local_file" "kubeconfig" {
   depends_on = [null_resource.load_eks_kubeconfig]
-  filename = "/root/.kube/config"
+  filename = var.kubeconfig_filepath
 }
 
 

@@ -1,5 +1,5 @@
 module "vpc" {
-  source = "../networking"
+  source = "../vpc"
   availability_zone = var.availability_zone
   eks_cluster_name = var.eks_cluster_name
   environment = var.environment
@@ -28,6 +28,7 @@ module "eks" {
   serviceaccount_namespace = var.serviceaccount_namespace
   karpetner_eks_serviceaccount_name = var.karpetner_eks_serviceaccount_name
   karpenter_serviceaccount_namespace = var.karpenter_serviceaccount_namespace
+  kubeconfig_filepath = var.kubeconfig_filepath
 }
 
 #module "eks-irsa" {
@@ -92,11 +93,3 @@ module "argocd" {
   argocd_namespace = var.argocd_namespace
   argocd_server_host = var.argocd_server_host
 }
-
-#module "application" {
-#  providers = {
-#    kubectl = kubectl.kubectl-provider
-#  }
-#  depends_on = [module.argocd]
-#  source = "../argo_applications"
-#}

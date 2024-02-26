@@ -6,6 +6,7 @@ stages:
 
 variables:
   TF_VAR_ENV_NAME: "dev"
+  KUBECONFIG_FILEPATH: "/root/.kube/config"
   BACKEND_CONFIG: "backend.tfvars"
   TF_ROOT: "infra/env/${TF_VAR_ENV_NAME}"
   KUBECONFIG_PATH: "/root/.kube"
@@ -35,12 +36,14 @@ plan_infra:
     - mkdir -p ${KUBECONFIG_PATH}
     - touch ${KUBECONFIG_PATH}/config
     - terraform plan -out=${TF_VAR_ENV_NAME}.plan -input=false
+  after_script:
+    - cp -r ${KUBECONFIG_PATH}/config ${CI_PROJECT_DIR}
   artifacts:
     name: "Terraform_Plan"
     when: on_success
     paths:
       - ${TF_ROOT}/${TF_VAR_ENV_NAME}.plan
-      - ${KUBECONFIG_PATH}/config
+      - ${CI_PROJECT_DIR}/config
 
 apply_infra:
   extends: .common
@@ -53,7 +56,9 @@ apply_infra:
     - rm /usr/lib/python3.11/EXTERNALLY-MANAGED
     - pip3 install --upgrade pip
     - pip3 install awscli
-    - terraform apply -input=false ${CI_PROJECT_DIR}/${TF_ROOT}/${TF_VAR_ENV_NAME}.plan
+    - mkdir -p ${KUBECONFIG_PATH}
+    - cp ${CI_PROJECT_DIR}/config ${KUBECONFIG_PATH}
+    - terraform apply -input=false -var "kubeconfig_filepath=${KUBECONFIG_FILEPATH}" ${CI_PROJECT_DIR}/${TF_ROOT}/${TF_VAR_ENV_NAME}.plan
 
 destroy_infra:
   extends: .common

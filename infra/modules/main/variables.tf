@@ -20,12 +20,6 @@ variable "karpetner_eks_serviceaccount_name" {
 variable "karpenter_serviceaccount_namespace" {
   type = string
 }
-#variable "loadbalancer_controller_role_arn" {
-#  type = string
-#}
-#variable "kubectl-provider" {
-#  type = string
-#}
 
 variable "environment" {
   type = string
@@ -101,12 +95,6 @@ variable "argocd_helm_chart_version" {
   default     = ""
 }
 
-#variable "argocd_server_host" {
-#  description = "Hostname for argocd (will be utilised in ingress if enabled)"
-#  type        = string
-#  default     = "argocd.calvineotieno.com"
-#}
-
 variable "argocd_ingress_enabled" {
   description = "Enable/disable argocd ingress"
   type        = bool
@@ -119,3 +107,4 @@ variable "argocd_name" {
 
 variable "argocd_server_host" {}
 
+variable "kubeconfig_filepath" {}

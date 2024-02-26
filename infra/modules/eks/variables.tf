@@ -59,3 +59,7 @@ variable "karpenter_serviceaccount_namespace" {
 variable "karpetner_eks_serviceaccount_name" {
   type = string
 }
+
+variable "kubeconfig_filepath" {
+  type = string
+}
