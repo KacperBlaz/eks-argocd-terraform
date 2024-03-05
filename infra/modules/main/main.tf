@@ -1,12 +1,16 @@
+locals {
+  eks_cluster_name = "${var.eks_cluster_name}-${var.environment}"
+}
+
 module "vpc" {
   source = "../vpc"
   availability_zone = var.availability_zone
-  eks_cluster_name = var.eks_cluster_name
+  eks_cluster_name = local.eks_cluster_name
   environment = var.environment
   private_subnets_cidr_blocks = var.private_subnets_cidr_blocks
   public_subnets_cidr_blocks = var.public_subnets_cidr_blocks
   vpc_cidr_block = var.vpc_cidr_block
-  cluster_name = var.eks_cluster_name
+  cluster_name = local.eks_cluster_name
 }
 
 module "eks" {
@@ -18,7 +22,8 @@ module "eks" {
   desired_size = var.desired_size
   max_size     = var.max_size
   min_size     = var.min_size
-  eks_cluster_name = var.eks_cluster_name
+
+  eks_cluster_name = local.eks_cluster_name
   capacity_type = var.capacity_type
   instance_types = var.instance_types
   max_unavailable = var.max_unavailable
@@ -84,7 +89,7 @@ module "karpenter" {
 
 module "argocd" {
   source = "../argocd"
-  depends_on = [module.eks,module.karpenter,module.k8s]
+  depends_on = [module.eks,module.k8s]
   environment = var.environment
   argo_repo_url = var.argo_repo_url
   argocd_helm_chart_version = var.argocd_helm_chart_version

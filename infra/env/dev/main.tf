@@ -1,3 +1,18 @@
+#locals {
+#  eks_cluster_name = "${var.eks_cluster_name}-${var.environment}"
+#
+##  nat_route_table_associations = flatten([
+##    for route_id, route in aws_route_table.private_route.id : {
+##      route_id = route_id
+##    }
+##      #      for nat_key, nat in  aws_nat_gateway.this.id : [
+##      #        for private_subnet_key, private_subnet in aws_subnet.private_subnet.id : {
+##      #          nat_key            = nat_key
+##      #          private_subnet_id = private_subnet_id
+##      #        }
+##    ])
+#}
+
 module "main" {
   providers = {
     kubectl = kubectl.kubectl-provider

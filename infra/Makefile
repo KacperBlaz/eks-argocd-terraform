@@ -43,6 +43,9 @@ init: checking-env
 plan: checking-env
 	${DOCKER_RUN} terraform plan
 
+console: checking-env
+	${DOCKER_RUN} terraform console
+
 apply: checking-env
 	${DOCKER_RUN} terraform apply --auto-approve
 

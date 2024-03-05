@@ -1,5 +1,5 @@
 resource "aws_eks_cluster" "argocd-cluster" {
-  name     = "${var.eks_cluster_name}-${var.environment}"
+  name     = "${var.eks_cluster_name}"
   role_arn = aws_iam_role.eks_role.arn
   enabled_cluster_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
 
@@ -61,10 +61,10 @@ data "local_file" "kubeconfig" {
 }
 
 
-resource "aws_ssm_parameter" "eks-kubeconfig" {
-  depends_on = [data.local_file.kubeconfig]
-  name = "/${var.environment}/eks/kubeconfig"
-  type = "String"
-  tier = "Advanced"
-  value = data.local_file.kubeconfig.content
-}
+#resource "aws_ssm_parameter" "eks-kubeconfig" {
+#  depends_on = [data.local_file.kubeconfig]
+#  name = "/${var.environment}/eks/kubeconfig"
+#  type = "String"
+#  tier = "Advanced"
+#  value = data.local_file.kubeconfig.content
+#}

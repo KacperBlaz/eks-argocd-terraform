@@ -35,20 +35,3 @@ data "kubernetes_service" "argo_loadbalancer" {
     namespace = var.argocd_namespace
   }
 }
-
-resource "null_resource" "argocd_password" {
-  provisioner "local-exec" {
-    command = "argocd admin initial-password -n ${var.argocd_namespace}"
-  }
-}
-#resource "null_resource" "expose_argocd_service" {
-#  provisioner "local-exec" {
-#    command = "kubectl patch svc argocd-eks-${var.environment}-server -n ${var.argocd_namespace} -p '{\"spec\": {\"type\": \"LoadBalancer\"}}'"
-#  }
-#}
-#
-#resource "null_resource" "argocd_server" {
-#  provisioner "local-exec" {
-#    command = "kubectl get svc -n argocd | awk '{ print $4 }' | grep .com"
-#  }
-#}
